@@ -13,6 +13,7 @@ const unitLength = width / cells;
 
 //* Create New Engine
 const engine = Engine.create();
+engine.world.gravity.y = 0;
 const { world } = engine;
 
 //* Creates a canvas
