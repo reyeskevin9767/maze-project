@@ -5,6 +5,7 @@
 //* Bodies - Geometry in the world
 const { Engine, Render, Runner, World, Bodies } = Matter;
 
+const cells = 5;
 const width = 600;
 const height = 600;
 
@@ -17,7 +18,7 @@ const render = Render.create({
   element: document.body,
   engine: engine,
   options: {
-    wireframes: false,
+    wireframes: true,
     width: width,
     height: height,
   },
@@ -46,5 +47,19 @@ const walls = [
 //* Add Walls to the world
 World.add(world, walls);
 
-//* When objects leave the canvas
-Matter.World.remove(world, body);
+//* Maze Generation
+const grid = Array(cells)
+  .fill(null)
+  .map(() => Array(cells).fill(false));
+
+//* Vertical Lines
+const verticals = Array(cells)
+  .fill(null)
+  .map(() => Array(cells - 1).fill(false));
+
+//* Horizontal Lines
+const horizontals = Array(cells - 1)
+  .fill(null)
+  .map(() => Array(cells).fill(false));
+
+console.log(grid);
