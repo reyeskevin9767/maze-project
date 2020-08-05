@@ -9,6 +9,8 @@ const cells = 3;
 const width = 600;
 const height = 600;
 
+const unitLength = width / cells;
+
 //* Create New Engine
 const engine = Engine.create();
 const { world } = engine;
@@ -30,16 +32,16 @@ Runner.run(Runner.create(), engine);
 
 //* Walls
 const walls = [
-  Bodies.rectangle(width / 2, 0, width, 40, {
+  Bodies.rectangle(width / 2, 0, width, 2, {
     isStatic: true,
   }),
-  Bodies.rectangle(width / 2, height, width, 40, {
+  Bodies.rectangle(width / 2, height, width, 2, {
     isStatic: true,
   }),
-  Bodies.rectangle(0, height / 2, 40, height, {
+  Bodies.rectangle(0, height / 2, 2, height, {
     isStatic: true,
   }),
-  Bodies.rectangle(width, height / 2, 40, height, {
+  Bodies.rectangle(width, height / 2, 2, height, {
     isStatic: true,
   }),
 ];
@@ -123,15 +125,76 @@ const stepThroughCell = (row, column) => {
     if (direction === 'left') {
       verticals[row][column - 1] = true;
     } else if (direction === 'right') {
-      verticals[row][column] == true;
+      verticals[row][column] = true;
     } else if (direction === 'up') {
       horizontals[row - 1][column] = true;
     } else if (direction === 'down') {
       horizontals[row][column] = true;
     }
-  }
 
-  // Visit the next cell
+    // Visit the next cell
+    stepThroughCell(nextRow, nextColumn);
+  }
 };
 
+//* Starting point to create maze
 stepThroughCell(startRow, startColumn);
+
+//* Draw horizontal walls
+horizontals.forEach((row, rowIndex) => {
+  row.forEach((open, columnIndex) => {
+    if (open) {
+      return;
+    }
+
+    const wall = Bodies.rectangle(
+      columnIndex * unitLength + unitLength / 2,
+      rowIndex * unitLength + unitLength,
+      unitLength,
+      5,
+      {
+        isStatic: true,
+      }
+    );
+
+    World.add(world, wall);
+  });
+});
+
+//* Draw vertical walls
+verticals.forEach((row, rowIndex) => {
+  row.forEach((open, columnIndex) => {
+    if (open) {
+      return;
+    }
+
+    const wall = Bodies.rectangle(
+      columnIndex * unitLength + unitLength,
+      rowIndex * unitLength + unitLength / 2,
+      5,
+      unitLength,
+      {
+        isStatic: true,
+      }
+    );
+
+    World.add(world, wall);
+  });
+});
+
+//* Goal for player
+const goal = Bodies.rectangle(
+  width - unitLength / 2,
+  height - unitLength / 2,
+  unitLength * 0.7,
+  unitLength * 0.7,
+  {
+    isStatic: true,
+  }
+);
+
+World.add(world, goal);
+
+//* Ball(player)
+const ball = Bodies.circle(unitLength / 2, unitLength / 2, unitLength / 4);
+World.add(world, ball);
