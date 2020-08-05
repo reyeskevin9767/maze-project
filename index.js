@@ -198,3 +198,22 @@ World.add(world, goal);
 //* Ball(player)
 const ball = Bodies.circle(unitLength / 2, unitLength / 2, unitLength / 4);
 World.add(world, ball);
+
+//* Event Listener to move the player
+document.addEventListener('keydown', (event) => {
+  if (event.keyCode === 87) {
+    console.log('Move Ball Up');
+  }
+
+  if (event.keyCode === 68) {
+    console.log('Move Ball Right');
+  }
+
+  if (event.keyCode === 83) {
+    console.log('Move Ball Down');
+  }
+
+  if (event.keyCode === 65) {
+    console.log('Move Ball Left');
+  }
+});
