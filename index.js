@@ -3,7 +3,7 @@
 //* Runner - Coordinate the Engine and World
 //* World - Snapshot of the world
 //* Bodies - Geometry in the world
-const { Engine, Render, Runner, World, Bodies } = Matter;
+const { Engine, Render, Runner, World, Bodies, Body } = Matter;
 
 const cells = 3;
 const width = 600;
@@ -201,19 +201,21 @@ World.add(world, ball);
 
 //* Event Listener to move the player
 document.addEventListener('keydown', (event) => {
+  const { x, y } = ball.velocity;
+
   if (event.keyCode === 87) {
-    console.log('Move Ball Up');
+    Body.setVelocity(ball, { x, y: y - 5 });
   }
 
   if (event.keyCode === 68) {
-    console.log('Move Ball Right');
+    Body.setVelocity(ball, { x: x + 5, y });
   }
 
   if (event.keyCode === 83) {
-    console.log('Move Ball Down');
+    Body.setVelocity(ball, { x, y: y + 5 });
   }
 
   if (event.keyCode === 65) {
-    console.log('Move Ball Left');
+    Body.setVelocity(ball, { x: x - 5, y });
   }
 });
