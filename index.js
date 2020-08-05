@@ -6,8 +6,8 @@
 //* Events - Listen for things that occur inside world
 const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
-const cellsHorizontal = Math.floor(Math.random() * 14) + 6;
-const cellsVertical = Math.floor(Math.random() * 14) + 6;
+const cellsHorizontal = Math.floor(Math.random() * 12) + 4;
+const cellsVertical = Math.floor(Math.random() * 12) + 4;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -261,8 +261,16 @@ Events.on(engine, 'collisionStart', (event) => {
   });
 });
 
-const button = document.querySelector('button');
 
-button.addEventListener('click', (event) => {
+const button = document.querySelector('button');
+const instructions = document.querySelector('.instructions');
+
+//* Event Listener
+button.addEventListener('click', () => {
   location.reload();
 });
+
+//* Remove intro
+setTimeout(() => {
+  instructions.classList.add('hidden');
+}, 2000);

@@ -6,6 +6,23 @@ body {
   overflow: hidden;
 }
 
+/* Style Intro */
+.instructions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+  height: 100vh;
+  width: 100vw;
+}
+
+.intro{
+  color: black; 
+  background-color: white;
+  padding: 20px;
+}
+
 /* Style winning message */
 .hidden {
   display: none !important;
