@@ -1,16 +1,31 @@
 /* Style body */
+html,
 body {
   margin: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
-/* Style message */
+/* Style Intro */
+.instructions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+  height: 100vh;
+  width: 100vw;
+}
+
+.intro{
+  color: black; 
+  background-color: white;
+  padding: 20px;
+}
+
+/* Style winning message */
 .hidden {
   display: none !important;
-}
-
-h1 {
-  color: white;
-  font-size: 36px;
 }
 
 .winner {

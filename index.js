@@ -6,8 +6,8 @@
 //* Events - Listen for things that occur inside world
 const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
-const cellsHorizontal = 14;
-const cellsVertical = 10;
+const cellsHorizontal = Math.floor(Math.random() * 12) + 4;
+const cellsVertical = Math.floor(Math.random() * 12) + 4;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -36,16 +36,16 @@ Runner.run(Runner.create(), engine);
 
 //* Walls
 const walls = [
-  Bodies.rectangle(width / 2, 0, width, 2, {
+  Bodies.rectangle(width / 2, 0, width, 4, {
     isStatic: true,
   }),
-  Bodies.rectangle(width / 2, height, width, 2, {
+  Bodies.rectangle(width / 2, height, width, 4, {
     isStatic: true,
   }),
-  Bodies.rectangle(0, height / 2, 2, height, {
+  Bodies.rectangle(0, height / 2, 4, height, {
     isStatic: true,
   }),
-  Bodies.rectangle(width, height / 2, 2, height, {
+  Bodies.rectangle(width, height / 2, 4, height, {
     isStatic: true,
   }),
 ];
@@ -157,10 +157,11 @@ horizontals.forEach((row, rowIndex) => {
       unitLengthX,
       5,
       {
+        friction: 0,
         label: 'wall',
         isStatic: true,
         render: {
-          fillStyle: 'red',
+          fillStyle: 'white',
         },
       }
     );
@@ -185,7 +186,7 @@ verticals.forEach((row, rowIndex) => {
         label: 'wall',
         isStatic: true,
         render: {
-          fillStyle: 'red',
+          fillStyle: 'white',
         },
       }
     );
@@ -215,29 +216,27 @@ World.add(world, goal);
 const ballRadius = Math.min(unitLengthX, unitLengthY) / 4;
 const ball = Bodies.circle(unitLengthX / 2, unitLengthY / 2, ballRadius, {
   label: 'ball',
-  render: {
-    fillStyle: 'blue',
-  },
+  friction: 0,
 });
 World.add(world, ball);
 
 //* Event Listener to move the player
 document.addEventListener('keydown', (event) => {
   const { x, y } = ball.velocity;
-
-  if (event.keyCode === 87) {
+  const speedLimit = 5;
+  if (event.keyCode === 87 && y > -speedLimit) {
     Body.setVelocity(ball, { x, y: y - 5 });
   }
 
-  if (event.keyCode === 68) {
+  if (event.keyCode === 68 && x < speedLimit) {
     Body.setVelocity(ball, { x: x + 5, y });
   }
 
-  if (event.keyCode === 83) {
+  if (event.keyCode === 83 && y < speedLimit) {
     Body.setVelocity(ball, { x, y: y + 5 });
   }
 
-  if (event.keyCode === 65) {
+  if (event.keyCode === 65 && x > -speedLimit) {
     Body.setVelocity(ball, { x: x - 5, y });
   }
 });
@@ -261,3 +260,17 @@ Events.on(engine, 'collisionStart', (event) => {
     }
   });
 });
+
+
+const button = document.querySelector('button');
+const instructions = document.querySelector('.instructions');
+
+//* Event Listener
+button.addEventListener('click', () => {
+  location.reload();
+});
+
+//* Remove intro
+setTimeout(() => {
+  instructions.classList.add('hidden');
+}, 2000);
