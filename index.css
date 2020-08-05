@@ -1,16 +1,14 @@
 /* Style body */
+html,
 body {
   margin: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
-/* Style message */
+/* Style winning message */
 .hidden {
   display: none !important;
-}
-
-h1 {
-  color: white;
-  font-size: 36px;
 }
 
 .winner {
