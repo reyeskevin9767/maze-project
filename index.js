@@ -17,7 +17,7 @@ const render = Render.create({
   element: document.body,
   engine: engine,
   options: {
-    wireframes: false,
+    wireframes: true,
     width: width,
     height: height,
   },
@@ -46,5 +46,19 @@ const walls = [
 //* Add Walls to the world
 World.add(world, walls);
 
-//* When objects leave the canvas
-Matter.World.remove(world, body);
+//* Maze Generation
+const grid = Array(3)
+  .fill(null)
+  .map(() => Array(3).fill(false));
+
+//* Verticals Array
+const verticals = Array(3)
+  .fill(null)
+  .map(() => Array(2).fill(false));
+
+//* Horizontals Array
+const horizontals = Array(2)
+  .fill(null)
+  .map(() => Array(3).fill(false));
+
+console.log(grid);
