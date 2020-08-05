@@ -125,7 +125,7 @@ const stepThroughCell = (row, column) => {
     if (direction === 'left') {
       verticals[row][column - 1] = true;
     } else if (direction === 'right') {
-      verticals[row][column] == true;
+      verticals[row][column] = true;
     } else if (direction === 'up') {
       horizontals[row - 1][column] = true;
     } else if (direction === 'down') {
@@ -143,7 +143,7 @@ stepThroughCell(startRow, startColumn);
 //* Draw horizontal walls
 horizontals.forEach((row, rowIndex) => {
   row.forEach((open, columnIndex) => {
-    if (open === true) {
+    if (open) {
       return;
     }
 
@@ -151,7 +151,28 @@ horizontals.forEach((row, rowIndex) => {
       columnIndex * unitLength + unitLength / 2,
       rowIndex * unitLength + unitLength,
       unitLength,
-      10,
+      5,
+      {
+        isStatic: true,
+      }
+    );
+
+    World.add(world, wall);
+  });
+});
+
+//* Draw vertical walls
+verticals.forEach((row, rowIndex) => {
+  row.forEach((open, columnIndex) => {
+    if (open) {
+      return;
+    }
+
+    const wall = Bodies.rectangle(
+      columnIndex * unitLength + unitLength,
+      rowIndex * unitLength + unitLength / 2,
+      5,
+      unitLength,
       {
         isStatic: true,
       }
