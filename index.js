@@ -5,7 +5,7 @@
 //* Bodies - Geometry in the world
 const { Engine, Render, Runner, World, Bodies } = Matter;
 
-const cells = 5;
+const cells = 3;
 const width = 600;
 const height = 600;
 
@@ -118,10 +118,20 @@ const stepThroughCell = (row, column) => {
     if (grid[nextRow][nextColumn]) {
       continue;
     }
+
+    // Remove a wall from either horizontals or verticals
+    if (direction === 'left') {
+      verticals[row][column - 1] = true;
+    } else if (direction === 'right') {
+      verticals[row][column] == true;
+    } else if (direction === 'up') {
+      horizontals[row - 1][column] = true;
+    } else if (direction === 'down') {
+      horizontals[row][column] = true;
+    }
   }
-  // Remove a wall from either horizontals or verticals
 
   // Visit the next cell
 };
 
-stepThroughCell(1, 1);
+stepThroughCell(startRow, startColumn);
